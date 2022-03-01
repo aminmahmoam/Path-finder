@@ -1,12 +1,6 @@
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -94,6 +88,42 @@ public class PathFinder<Node> {
          * Change here.                                                                                  *
          * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
          *************************************************************************************************/
+
+
+        Set<Node> visited = new HashSet<>();
+
+
+        PQEntry startEntry = new PQEntry(start, 0, null, null);
+
+        pqueue.add(startEntry);
+
+        while (!pqueue.isEmpty()) {
+            PQEntry entry = pqueue.poll();
+            Node node = entry.node;
+            iterations++;
+
+            if (node.equals(goal)) {
+                List<DirectedEdge<Node>> path = extractPath(entry);
+                return new Result(true, start, goal, entry.costToHere, path, iterations);
+            } else {
+                if (visited.contains(node)) continue;
+                visited.add(node);
+
+                List<DirectedEdge<Node>> neighbourNodes = graph.outgoingEdges(node);
+
+                if (neighbourNodes.size() == 0) {
+                    break;
+                } else {
+                    for (DirectedEdge<Node> x : neighbourNodes) {
+                        Node nod = x.to();
+                        if (!visited.contains(nod)) {
+                            pqueue.add(new PQEntry(nod, entry.costToHere + x.weight(), x, entry));
+
+                        }
+                    }
+                }
+            }
+        }
         return new Result(false, start, goal, -1, null, iterations);
     }
     
@@ -122,7 +152,15 @@ public class PathFinder<Node> {
          * TODO: Task 1b *
          * Change here.  *
          *****************/
-        return null;
+        List<DirectedEdge<Node>> edges = new ArrayList<>();
+
+        while (entry.backPointer != null) {
+            edges.add(entry.lastEdge);
+            entry = entry.backPointer;
+        }
+
+        Collections.reverse(edges);
+        return edges;
     }
 
     /**
