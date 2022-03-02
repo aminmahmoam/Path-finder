@@ -89,11 +89,11 @@ public class PathFinder<Node> {
          * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
          *************************************************************************************************/
         Set<Node> visited = new HashSet<>();
-        PQEntry startEntry = new PQEntry(start, 0, null, null, 0);
-        pqueue.add(startEntry);
+        PQEntry entry = new PQEntry(start, 0, null, null, 0);
+        pqueue.add(entry);
 
         while (!pqueue.isEmpty()) {
-            PQEntry entry = pqueue.poll();
+            entry = pqueue.poll();
             Node node = entry.node;
             iterations++;
 
@@ -107,8 +107,7 @@ public class PathFinder<Node> {
                 List<DirectedEdge<Node>> neighbourNodes = graph.outgoingEdges(node);
 
                 for (DirectedEdge<Node> x : neighbourNodes) {
-                    Node nod = x.to();
-                    pqueue.add(new PQEntry(nod, entry.costToHere + x.weight(), x, entry, 0));
+                    pqueue.add(new PQEntry(x.to(), entry.costToHere + x.weight(), x, entry, 0));
                 }
             }
         }
@@ -130,11 +129,11 @@ public class PathFinder<Node> {
          *************************************************************************************************/
         double estimation = graph.guessCost(start, goal);
         Set<Node> visited = new HashSet<>();
-        PQEntry startEntry = new PQEntry(start, 0, null, null, estimation);
-        pqueue.add(startEntry);
-        while (!pqueue.isEmpty()) {
+        PQEntry entry = new PQEntry(start, 0, null, null, estimation);
+        pqueue.add(entry);
 
-            PQEntry entry = pqueue.poll();
+        while (!pqueue.isEmpty()) {
+            entry = pqueue.poll();
             Node node = entry.node;
             iterations++;
 
@@ -148,9 +147,8 @@ public class PathFinder<Node> {
                 List<DirectedEdge<Node>> neighbourNodes = graph.outgoingEdges(node);
 
                 for (DirectedEdge<Node> x : neighbourNodes) {
-                    Node nod = x.to();
-                    estimation = graph.guessCost(nod, goal) + entry.costToHere + x.weight();
-                    pqueue.add(new PQEntry(nod, entry.costToHere + x.weight(), x, entry, estimation));
+                    estimation = graph.guessCost(x.to(), goal) + entry.costToHere + x.weight();
+                    pqueue.add(new PQEntry(x.to(), entry.costToHere + x.weight(), x, entry, estimation));
                 }
             }
         }
