@@ -24,11 +24,11 @@ public class RunPathFinder {
            // If you don't want to specify arguments on the command-line, just uncomment this block.
         if (args.length == 0)
             args = new String[] { 
-                "astar",         // Algorithm = random | ucs | astar
-                "GridGraph", // Graphtype = AdjacencyGraph | WordLadder | NPuzzle | GridGraph
-                 "graphs/GridGraph/AR0012SR.map",  // Graph
-                "11:73",           // Start node
-                "85:127"           // Goal node
+                "ucs",         // Algorithm = random | ucs | astar
+                "WordLadder", // Graphtype = AdjacencyGraph | WordLadder | NPuzzle | GridGraph
+                 "graphs/WordLadder/swedish-saldo.txt",  // Graph
+                "eller",           // Start node
+                "glada"           // Goal node
             };
 
 

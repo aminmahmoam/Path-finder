@@ -100,13 +100,11 @@ public class WordLadder implements DirectedGraph<String> {
         double count = 0;
         char[] arr1 = w.toCharArray();
         char[] arr2 = u.toCharArray();
+        int minLenght = Math.min(w.length(), u.length());
 
-        for (int i=0; i<w.length(); i++) {
-            for (int j=i; j<u.length(); j++) {
-                if (arr1[i] != arr2[j]) {
-                    count++;
-                    i++;
-                }
+        for (int i=0; i<minLenght; i++) {
+            if (arr1[i] != arr2[i]) {
+                count++;
             }
         }
         return count;
