@@ -21,15 +21,16 @@ import java.util.stream.Stream;
 public class RunPathFinder {
 
     public static void main(String[] args) throws IOException {
-         // If you don't want to specify arguments on the command-line, just uncomment this block.
+           // If you don't want to specify arguments on the command-line, just uncomment this block.
         if (args.length == 0)
             args = new String[] { 
                 "ucs",         // Algorithm = random | ucs | astar
                 "AdjacencyGraph", // Graphtype = AdjacencyGraph | WordLadder | NPuzzle | GridGraph
-                "graphs/AdjacencyGraph/citygraph-VGregion.txt",  // Graph
+                 "graphs/AdjacencyGraph/citygraph-VGregion.txt",  // Graph
                 "Skara",           // Start node
                 "Lerum"           // Goal node
             };
+
 
 
 

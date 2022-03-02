@@ -46,9 +46,7 @@ public interface DirectedGraph<Node> {
      *
      * The default guessed cost is 0, this is always admissible.
      */
-    default double guessCost(Node n, Node m) {
-        return 0;
-    }
+    default double guessCost(Node n, Node m) {return 0;}
 
     /**
      * @param str  a string

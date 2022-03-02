@@ -132,7 +132,7 @@ public class GridGraph implements DirectedGraph<Point> {
          * TODO: Task 4 *
          * Change here. *
          ****************/
-        return 0;
+        return Math.sqrt((p.x-q.x)^2 + (p.y-q.y)^2);
     }
 
     /**

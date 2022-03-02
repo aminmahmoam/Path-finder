@@ -88,13 +88,8 @@ public class PathFinder<Node> {
          * Change here.                                                                                  *
          * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
          *************************************************************************************************/
-
-
         Set<Node> visited = new HashSet<>();
-
-
-        PQEntry startEntry = new PQEntry(start, 0, null, null);
-
+        PQEntry startEntry = new PQEntry(start, 0, null, null, 0);
         pqueue.add(startEntry);
 
         while (!pqueue.isEmpty()) {
@@ -116,10 +111,7 @@ public class PathFinder<Node> {
                 } else {
                     for (DirectedEdge<Node> x : neighbourNodes) {
                         Node nod = x.to();
-                        if (!visited.contains(nod)) {
-                            pqueue.add(new PQEntry(nod, entry.costToHere + x.weight(), x, entry));
-
-                        }
+                        pqueue.add(new PQEntry(nod, entry.costToHere + x.weight(), x, entry, 0));
                     }
                 }
             }
@@ -134,11 +126,43 @@ public class PathFinder<Node> {
      */
     public Result searchAstar(Node start, Node goal) {
         int iterations = 0;
+        Queue<PQEntry> pqueue = new PriorityQueue<>(Comparator.comparingDouble(e -> e.estimatedCost));
         /*************************************************************************************************
          * TODO: Task 1a+c                                                                               *
          * Change here.                                                                                  *
          * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
          *************************************************************************************************/
+        double estimation = graph.guessCost(start, goal);
+        Set<Node> visited = new HashSet<>();
+        PQEntry startEntry = new PQEntry(start, 0, null, null, estimation);
+        pqueue.add(startEntry);
+        while (!pqueue.isEmpty()) {
+
+            PQEntry entry = pqueue.poll();
+            Node node = entry.node;
+            iterations++;
+
+            if (node.equals(goal)) {
+                List<DirectedEdge<Node>> path = extractPath(entry);
+                return new Result(true, start, goal, entry.costToHere, path, iterations);
+            } else {
+                if (visited.contains(node)) continue;
+                visited.add(node);
+
+                List<DirectedEdge<Node>> neighbourNodes = graph.outgoingEdges(node);
+
+                if (neighbourNodes.size() == 0) {
+                    break;
+                } else {
+                    for (DirectedEdge<Node> x : neighbourNodes) {
+                        Node nod = x.to();
+                        estimation = graph.guessCost(nod, goal) + entry.costToHere + x.weight();
+                        pqueue.add(new PQEntry(nod, entry.costToHere + x.weight(), x, entry, estimation));
+                    }
+                }
+            }
+        }
+
         return new Result(false, start, goal, -1, null, iterations);
     }
 
@@ -171,17 +195,19 @@ public class PathFinder<Node> {
         public final double costToHere;
         public final DirectedEdge<Node> lastEdge;  // null for starting entry
         public final PQEntry backPointer;          // null for starting entry
+        public final double estimatedCost;
         /***************************************************
          * TODO: Task 3                                    *
          * Change here,                                    *
          * For example, to add new fields or constructors. *
          **************************************************/
 
-        PQEntry(Node node, double costToHere, DirectedEdge<Node> lastEdge, PQEntry backPointer) {
+        PQEntry(Node node, double costToHere, DirectedEdge<Node> lastEdge, PQEntry backPointer, double estimatedCost) {
             this.node = node;
             this.costToHere = costToHere;
             this.lastEdge = lastEdge;
             this.backPointer = backPointer;
+            this.estimatedCost = estimatedCost;
         }
     }
 

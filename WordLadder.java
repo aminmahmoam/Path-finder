@@ -3,11 +3,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -71,7 +67,24 @@ public class WordLadder implements DirectedGraph<String> {
          * TODO: Task 2 *
          * Change here. *
          ****************/
-        return new LinkedList<>();
+        List<DirectedEdge<String>> answer = new LinkedList<>();
+
+        for (int i=0; i!= w.length(); i++) {
+              for (char j : alphabet) {
+
+                  char[] arr = w.toCharArray();
+                  arr[i] = j;
+                  String str = new String(arr);
+
+                if (dictionary.contains(str) && !str.equals(w)) {
+                    DirectedEdge<String> result = new DirectedEdge<>(w,str,1);
+                    answer.add(result);
+                }
+            }
+        }
+
+        return answer;
+
     }
 
     /**
@@ -86,7 +99,17 @@ public class WordLadder implements DirectedGraph<String> {
          * TODO: Task 4 *
          * Change here. *
          ****************/
-        return 0;
+        double count = 0;
+        char[] arr1 = w.toCharArray();
+        char[] arr2 = u.toCharArray();
+
+        for (int i=0; i<w.length(); i++) {
+            for (int j=i; j<u.length(); j++) {
+                if (arr1[i] != arr2[j])
+                    count++;
+            }
+        }
+        return count;
     }
 
     @Override
