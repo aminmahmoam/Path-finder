@@ -106,13 +106,9 @@ public class PathFinder<Node> {
 
                 List<DirectedEdge<Node>> neighbourNodes = graph.outgoingEdges(node);
 
-                if (neighbourNodes.size() == 0) {
-                    break;
-                } else {
-                    for (DirectedEdge<Node> x : neighbourNodes) {
-                        Node nod = x.to();
-                        pqueue.add(new PQEntry(nod, entry.costToHere + x.weight(), x, entry, 0));
-                    }
+                for (DirectedEdge<Node> x : neighbourNodes) {
+                    Node nod = x.to();
+                    pqueue.add(new PQEntry(nod, entry.costToHere + x.weight(), x, entry, 0));
                 }
             }
         }
@@ -151,14 +147,10 @@ public class PathFinder<Node> {
 
                 List<DirectedEdge<Node>> neighbourNodes = graph.outgoingEdges(node);
 
-                if (neighbourNodes.size() == 0) {
-                    break;
-                } else {
-                    for (DirectedEdge<Node> x : neighbourNodes) {
-                        Node nod = x.to();
-                        estimation = graph.guessCost(nod, goal) + entry.costToHere + x.weight();
-                        pqueue.add(new PQEntry(nod, entry.costToHere + x.weight(), x, entry, estimation));
-                    }
+                for (DirectedEdge<Node> x : neighbourNodes) {
+                    Node nod = x.to();
+                    estimation = graph.guessCost(nod, goal) + entry.costToHere + x.weight();
+                    pqueue.add(new PQEntry(nod, entry.costToHere + x.weight(), x, entry, estimation));
                 }
             }
         }

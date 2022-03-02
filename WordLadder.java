@@ -82,9 +82,7 @@ public class WordLadder implements DirectedGraph<String> {
                 }
             }
         }
-
         return answer;
-
     }
 
     /**
@@ -105,8 +103,10 @@ public class WordLadder implements DirectedGraph<String> {
 
         for (int i=0; i<w.length(); i++) {
             for (int j=i; j<u.length(); j++) {
-                if (arr1[i] != arr2[j])
+                if (arr1[i] != arr2[j]) {
                     count++;
+                    i++;
+                }
             }
         }
         return count;
