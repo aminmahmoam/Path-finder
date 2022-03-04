@@ -3,9 +3,9 @@
 ******************************************************************************/
 
 Group members:
-- [...]
-- [...]
-- [...]
+- Fiza Amjad
+- Yasamin Fazelidehkordi
+- Amin Mahmoudifard
 
 /******************************************************************************
 ** 1. List the number of loop iterations, minimal cost, and a shortest path
@@ -14,48 +14,49 @@ Group members:
 
 > java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-SE.txt Lund Kiruna
 
-loop iterations: [...]
-minimal cost:    [...]
-shortest path:   [...]
+loop iterations: 5427
+minimal cost:    1826
+shortest path:   Lund --[16]-> Löddeköpinge --[69]-> Hjärnarp --[52]-> Åled --[6]-> Oskarström --[22]-> ..... --[68]-> Storuman --[71]-> Sorsele --[233]-> Jokkmokk --[93]-> Gällivare --[121]-> Kiruna
+
 
 > java RunPathFinder ucs NPuzzle 3 /HFG/BED/C_A/ /ABC/DEF/GH_/
 
-loop iterations: [...]
-minimal cost:    [...]
-shortest path:   [...]
+loop iterations: 483540
+minimal cost:    31
+shortest path:   /HFG/BED/C_A/ -> /HFG/BED/CA_/ -> /HFG/BE_/CAD/ -> /HF_/BEG/CAD/ -> /H_F/BEG/CAD/ -> ..... -> /AEB/D_C/GHF/ -> /A_B/DEC/GHF/ -> /AB_/DEC/GHF/ -> /ABC/DE_/GHF/ -> /ABC/DEF/GH_/
 
 > java RunPathFinder astar NPuzzle 3 /HFG/BED/C_A/ /ABC/DEF/GH_/
 
-loop iterations: [...]
-minimal cost:    [...]
+loop iterations: 43620
+minimal cost:    31
 
 > java RunPathFinder ucs NPuzzle 3 /HGF/BED/C_A/ /ABC/DEF/GH_/
 
-loop iterations: [...]
+loop iterations: 483841
 minimal cost:    [...]
-shortest path:   [...]
+shortest path:   No path found from /HGF/BED/C_A/ to /ABC/DEF/GH_/
 
 > java RunPathFinder ucs GridGraph graphs/GridGraph/AR0011SR.map 23:161 130:211
 
-loop iterations: [...]
-minimal cost:    [...]
-shortest path:   [...]
+loop iterations: 159327
+minimal cost:    366,4
+shortest path:   23:161 -> 23:160 -> 23:159 -> 23:158 -> 23:157 -> ..... -> 132:207 -> 131:208 -> 131:209 -> 130:210 -> 130:211
 
 > java RunPathFinder astar GridGraph graphs/GridGraph/AR0011SR.map 23:161 130:211
 
-loop iterations: [...]
-minimal cost:    [...]
+loop iterations: 95163
+minimal cost:    366,4
 
 > java RunPathFinder ucs WordLadder graphs/WordLadder/words-saldo.txt syster broder
 
-loop iterations: [...]
-minimal cost:    [...]
-shortest path:   [...]
+loop iterations: 71182
+minimal cost:    11
+shortest path:   syster -> sylter -> sylten -> synten -> synden -> ..... -> bauden -> bruden -> bröden -> bröder -> broder
 
 > java RunPathFinder astar WordLadder graphs/WordLadder/words-saldo.txt syster broder
 
-loop iterations: [...]
-minimal cost:    [...]
+loop iterations: 7055
+minimal cost:    11
 
 /******************************************************************************
 ** 2. For each of the three classes GridGraph, WordLadder, and NPuzzle,
@@ -64,11 +65,11 @@ minimal cost:    [...]
 **    Try a number of different examples per class.
 ******************************************************************************/
 
-GridGraph:  [...]
+GridGraph:  1.67 rounded to -> 2.00
 
-WordLadder: [...]
+WordLadder: 10.08 rounded to -> 10.00
 
-NPuzzle:    [...]
+NPuzzle:    11.08 rounded to -> 11.00
 
 /******************************************************************************
 ** 3. For which of the three classes GridGraph, WordLadder, and NPuzzle,
@@ -76,14 +77,24 @@ NPuzzle:    [...]
 **    What do you think is the reason for this?
 ******************************************************************************/
 
-[...]
+NPuzzle
+As already mentioned in readMe file, the NPuzzle has a very complex way of solving the problem and as we grow
+in size (numbers like 4), finding the desired answer becomes nearly impossible. So, having estimations for finding
+better paths in each stage of the program will ignore a lot of other options in each stage and we somehow minimize the
+possible options we have and make the program work faster.
 
 /******************************************************************************
 ** 4. What are the main differences between your implementations
 **    of searchAstar and searchUCS?
 ******************************************************************************/
 
-[...]
+The difference between the two algorithms is basically the idea of having estimations of cost (from that node to goal)
+for each PQEntry in Astar which makes the code smarter to choose from connected edges to each node. So, in each stage of
+the program we know what is the best optimal edge to choose next so at the end we have gone through the shortest path
+possible. To go deeper in the code, this estimation is the sum of the cost so far and the estimated cost from that specific
+node to the goal and instead of choosing the minimal cost from the start to that specific node (costToHere) we get the PQEntry
+with the minimal estimatedCost (by changing the comparator).
+
 
 /******************************************************************************
 ** 5. What's the asymptotic average-case complexity of WordLadder.outgoingEdges
@@ -91,7 +102,11 @@ NPuzzle:    [...]
 **    Justify briefly.
 ******************************************************************************/
 
-[...]
+The complexity of changing the given word to a new word with String format is O(N). The complexity of if statement is O(1)
+since creating a new edge and adding it to a linkedList both take constant time. Moreover, in first for_loop we are going
+through all the letters of our given word which has the complexity of O(N) and in the second for_loop we are going through
+all the elements inside our alphabet which has the complexity of O(K). Overall, with the two for_loops and the code inside them
+with complexity of O(N) we will have the complexity of O(N^2.K) for the outgoingEdges method.
 
 /******************************************************************************
 ** Appendix: General information
@@ -99,15 +114,15 @@ NPuzzle:    [...]
 ** A. Approximately how many hours did you spend on the assignment?
 ******************************************************************************/
 
-[..group member..]:  [..hours..]
-[..group member..]:  [..hours..]
-[..group member..]:  [..hours..]
+Yasamin Fazelidehkordi:  9 hours
+Faiza Amjad:  10 hours
+Amin Mahmoudifard:  11 hours
 
 /******************************************************************************
 ** B. Are there any known bugs / limitations?
 ******************************************************************************/
 
-[...]
+Not that we are aware of.
 
 /******************************************************************************
 ** C. Did you collaborate with any other students on this lab?
@@ -116,13 +131,15 @@ NPuzzle:    [...]
 **    may have used in creating your design.
 ******************************************************************************/
 
-[...]
+Yes
+By discussing the bugs we had with code and trying to come up with solutions to solve them.
+With group 13.
 
 /******************************************************************************
 ** D. Describe any serious problems you encountered.
 ******************************************************************************/
 
-[...]
+Nothing.
 
 /******************************************************************************
 ** E. List any other comments here.
