@@ -47,13 +47,13 @@ shortest path:   23:161 -> 23:160 -> 23:159 -> 23:158 -> 23:157 -> ..... -> 132:
 loop iterations: 95163
 minimal cost:    366,4
 
-> java RunPathFinder ucs WordLadder graphs/WordLadder/words-saldo.txt syster broder
+> java RunPathFinder ucs WordLadder graphs/WordLadder/swedish-saldo.txt syster broder
 
 loop iterations: 71182
 minimal cost:    11
 shortest path:   syster -> sylter -> sylten -> synten -> synden -> ..... -> bauden -> bruden -> bröden -> bröder -> broder
 
-> java RunPathFinder astar WordLadder graphs/WordLadder/words-saldo.txt syster broder
+> java RunPathFinder astar WordLadder graphs/WordLadder/swedish-saldo.txt syster broder
 
 loop iterations: 7055
 minimal cost:    11
